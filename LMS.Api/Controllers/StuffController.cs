@@ -14,10 +14,10 @@ namespace LMS.Api.Controllers
         private static readonly HttpClient Client = new HttpClient();
         private StuffMapper _mapper;
 
-        public StuffController(SqlContext context, IHttpContextAccessor httpContextAccesor) : base(context, new StuffMapper(), httpContextAccesor)
-        {
-            _mapper = new StuffMapper(Logic);
-        }
+        //public StuffController(SqlContext context, IHttpContextAccessor httpContextAccesor) : base(context, new StuffMapper(), httpContextAccesor)
+        //{
+        //    _mapper = new StuffMapper(Logic);
+        //}
 
         [HttpGet]
         public IActionResult Get()

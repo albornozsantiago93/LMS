@@ -104,15 +104,15 @@ namespace LMS.Common
         #endregion
 
         #region Methods to map objects
-        protected T MapTo<T>(object item)
-        {
-            return Mapper.MapTo<T>(item, CurrentLanguage);
-        }
+        //protected T MapTo<T>(object item)
+        //{
+        //    return Mapper.MapTo<T>(item, CurrentLanguage);
+        //}
 
-        protected IList<T> MapListTo<T>(object item)
-        {
-            return Mapper.MapListTo<T>(item, CurrentLanguage);
-        }
+        //protected IList<T> MapListTo<T>(object item)
+        //{
+        //    return Mapper.MapListTo<T>(item, CurrentLanguage);
+        //}
         #endregion
 
         #region Methods to get current user info from token
