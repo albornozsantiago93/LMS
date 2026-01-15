@@ -15,7 +15,7 @@ namespace LMS.Common
         {
 
         }
-        public StuffMapper(LogicProxy logic)
+        public StuffMapper(ILogicProxy logic)
         {
             Logic = logic;
         }

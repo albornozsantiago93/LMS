@@ -15,6 +15,9 @@ namespace LMS.Common
     public class BaseMapper
     {
         Dictionary<string, IMapper> _mappers = new Dictionary<string, IMapper>();
+
+        public ILogicProxy Logic { get; set; }
+
         public IMapper Mapper(string language)
         {
             if (!_mappers.ContainsKey(language))
@@ -25,8 +28,6 @@ namespace LMS.Common
             return _mappers[language];
 
         }
-
-        public LogicProxy Logic { get; set; }
 
         protected MapperConfiguration GetMapperConfiguration(string language)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMS.Common.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,29 +14,19 @@ namespace LMS.Common
 {
     public class BaseController : ControllerBase
     {
-        protected SqlContext Context { get; }
+        protected ISqlContext Context { get; }
         private IHttpContextAccessor _httpContextAccesor;
-        private LogicProxy _logic;
+        
+        private ILogicProxy _logic;
 
-        public LogicProxy Logic
-        {
-            get
-            {
-                if (_logic == null)
-                {
-                    _logic = new LogicProxy(Context);
-                }
 
-                return _logic;
-            }
-        }
 
         public BaseController()
         {
             
         }
 
-        public BaseController(SqlContext context, BaseMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public BaseController(ISqlContext context, BaseMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             string userEmail = string.Empty;
             Context = context;
@@ -47,15 +38,17 @@ namespace LMS.Common
             {
                 userEmail = httpContextAccessor.HttpContext.User.Claims.Where(x => x.Type == "useremail").SingleOrDefault().Value;
             }
-            //Thread.CurrentPrincipal = new LMSPrincipal(userEmail);
+            Thread.CurrentPrincipal = new LMSPrincipal(userEmail);
         }
 
-        public BaseController(SqlContext context, BaseMapper mapper)
+        public BaseController(ISqlContext context, BaseMapper mapper)
         {
             Context = context;
             Mapper = mapper;
             mapper.Logic = this.Logic;
         }
+
+        protected ILogicProxy Logic => _logic;
 
         #region Properties to get info from headers
         protected string CurrentToken

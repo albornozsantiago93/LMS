@@ -1,14 +1,11 @@
-﻿using LMS.Domain;
+﻿using LMS.Common.Logic;
+using LMS.Domain;
 using LMS.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LMS.Application.Logic
 {
-    public class StuffLogic
+    public class StuffLogic : IStuffLogic
     {
         private SqlContext _context;
 

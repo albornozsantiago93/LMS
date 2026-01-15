@@ -1,4 +1,10 @@
 
+using LMS.Application;
+using LMS.Application.Logic;
+using LMS.Common;
+using LMS.Common.Logic;
+using LMS.Infrastructure;
+
 namespace LMS.Api
 {
     public class Program
@@ -7,8 +13,12 @@ namespace LMS.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddDbContext<SqlContext>();
+            builder.Services.AddScoped<ISqlContext, SqlContext>();
+            builder.Services.AddScoped<IStuffLogic, StuffLogic>();
+            builder.Services.AddScoped<ILogicProxy, LogicProxy>();
 
+            // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +41,8 @@ namespace LMS.Api
             app.MapControllers();
 
             app.Run();
+
+
         }
     }
 }

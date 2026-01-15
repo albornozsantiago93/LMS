@@ -1,21 +1,23 @@
 ﻿using LMS.Application.Logic;
+using LMS.Common;
+using LMS.Common.Logic;
 using LMS.Infrastructure;
 
 namespace LMS.Application
 {
-    public class LogicProxy
+    public class LogicProxy : ILogicProxy
     {
-        private StuffLogic      _stuffLogic;
-        private CourseCfgLogic  _courseCfgLogic;
+        private readonly IStuffLogic _stuffLogic;
+        private readonly ICourseCfgLogic _courseCfgLogic;
 
-        public LogicProxy(SqlContext context)
+        public LogicProxy(ISqlContext context)
         {
-            _stuffLogic = new StuffLogic(context);
-            _courseCfgLogic = new CourseCfgLogic(context);
+            _stuffLogic = new StuffLogic((SqlContext)context);
+            _courseCfgLogic = new CourseCfgLogic((SqlContext)context);
         }
 
-        public StuffLogic StuffLogic { get { return _stuffLogic; } }
-        public CourseCfgLogic CourseCfgLogic { get { return _courseCfgLogic; } }
+        public IStuffLogic StuffLogic => _stuffLogic;
+        public ICourseCfgLogic CourseCfgLogic => _courseCfgLogic;
 
     }
 }

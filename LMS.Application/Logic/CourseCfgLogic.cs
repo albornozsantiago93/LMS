@@ -1,13 +1,9 @@
-﻿using LMS.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LMS.Common.Logic;
+using LMS.Infrastructure;
 
 namespace LMS.Application.Logic
 {
-    public class CourseCfgLogic
+    public class CourseCfgLogic : ICourseCfgLogic
     {
         private SqlContext _context;
 

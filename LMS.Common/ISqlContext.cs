@@ -1,5 +1,4 @@
-﻿using LMS.Common;
-using LMS.Domain;
+﻿using LMS.Domain;
 using LMS.Domain.Stuff;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,21 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMS.Infrastructure
+namespace LMS.Common
 {
-    public class SqlContext : DbContext , ISqlContext
+    public interface ISqlContext
     {
-        public SqlContext(DbContextOptions<SqlContext> options) : base(options) { }
-
-        public SqlContext() : base()
-        {
-            
-        }
-
         public DbSet<BaseUserEntity> BaseUserEntity { get; set; }
         public DbSet<Country> Country { get; set; }
         public DbSet<State> State { get; set; }
 
+
+
+        Task<int> SaveChangesAsync(CancellationToken token = default);
 
     }
 }
