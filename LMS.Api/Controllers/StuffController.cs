@@ -2,7 +2,6 @@ using LMS.Common;
 using LMS.Common.DTOs;
 using LMS.Domain;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace LMS.Api.Controllers
 {
@@ -24,10 +23,8 @@ namespace LMS.Api.Controllers
         [HttpGet("countries")]
         public ActionResult<List<CountryModel>> GetCountries()
         {
-            List<CountryModel> ret = new List<CountryModel>();
-            List<Country> entity = Logic.StuffLogic.GetCountries();//_mapper.Logic.StuffLogic.GetCountries();
-
-            ret = Mapper.Mapper(CurrentLanguage).Map<List<CountryModel>>(entity);
+            List<Country> entity = Logic.StuffLogic.GetCountries();
+            var ret = _mapper.Mapper(CurrentLanguage).Map<List<CountryModel>>(entity);
 
             return Ok(ret);
         }

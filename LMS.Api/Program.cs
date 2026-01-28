@@ -4,7 +4,8 @@ using LMS.Application.Logic;
 using LMS.Common;
 using LMS.Common.Logic;
 using LMS.Infrastructure;
-using Microsoft.AspNetCore.Http;
+using StackExchange.Redis;
+
 
 namespace LMS.Api
 {
@@ -13,6 +14,10 @@ namespace LMS.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var redisConnection = builder.Configuration.GetConnectionString("RedisConnection");
+            var multiplexer = ConnectionMultiplexer.Connect(redisConnection);
+            CacheManager.Init(multiplexer);
 
             builder.Services.AddDbContext<SqlContext>();
             builder.Services.AddScoped<ISqlContext, SqlContext>();

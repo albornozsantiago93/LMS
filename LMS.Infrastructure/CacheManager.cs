@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LMS.Infrastructure
 {
-    internal class CacheManager
+    public class CacheManager
     {
         private static IConnectionMultiplexer _connectionMultiplexer;
         private static JsonSerializerSettings _serializerSettings;

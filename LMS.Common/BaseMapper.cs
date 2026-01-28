@@ -2,13 +2,6 @@
 using AutoMapper.Configuration;
 using LMS.Common.DTOs;
 using LMS.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LMS.Common
 {
@@ -26,7 +19,11 @@ namespace LMS.Common
             }
 
             return _mappers[language];
+        }
 
+        public T MapTo<T>(object item, string targetLanguage)
+        {
+            return Mapper(targetLanguage).Map<T>(item);
         }
 
         protected MapperConfiguration GetMapperConfiguration(string language)

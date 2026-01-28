@@ -2,21 +2,25 @@
 using LMS.Domain;
 using LMS.Domain.Stuff;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace LMS.Infrastructure
 {
     public class SqlContext : DbContext , ISqlContext
     {
-        public SqlContext(DbContextOptions<SqlContext> options) : base(options) { }
-
-        public SqlContext() : base()
+        private readonly IConfiguration _configuration;
+        public SqlContext(DbContextOptions<SqlContext> options, IConfiguration configuration) : base(options)
         {
-            
+            _configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = _configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
         }
 
         public DbSet<BaseUserEntity> BaseUserEntity { get; set; }
