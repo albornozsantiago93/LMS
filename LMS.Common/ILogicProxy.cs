@@ -7,5 +7,6 @@ namespace LMS.Common
     {
         public IStuffLogic  StuffLogic { get; }
         public ICourseCfgLogic CourseCfgLogic { get; }
+        public ISecurityLogic SecurityLogic { get; }    
     }
 }

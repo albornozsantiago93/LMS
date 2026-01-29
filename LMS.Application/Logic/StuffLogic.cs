@@ -17,7 +17,7 @@ namespace LMS.Application.Logic
 
         public async Task<List<Country>> GetCountries()
         {
-            return await _context.Country.OrderBy(x => x.Name).ToListAsync();
+            return await _context.Country.OrderBy(x => x).ToListAsync();
         }
 
     }

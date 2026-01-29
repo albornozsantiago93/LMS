@@ -1,5 +1,4 @@
 ﻿using AutoMapper.Configuration;
-using LMS.Common.DTOs;
 using LMS.Domain;
 using System;
 using System.Collections.Generic;

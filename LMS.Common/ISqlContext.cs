@@ -6,15 +6,20 @@ namespace LMS.Common
 {
     public interface ISqlContext
     {
-        //public DbSet<BaseEntity> BaseEntity { get; set; }
-        //public DbSet<BaseUserEntity> BaseUserEntity { get; set; }
+        #region Entities
         public DbSet<Country> Country { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<PlatformPermission> PlatformPermission { get; set; }
         public DbSet<SystemUser> SystemUser { get; set; }
         public DbSet<LearningUser> LearningUser { get; set; }
+        #endregion
 
+        #region Views
+        public DbSet<UserView> UserView { get; set; }
 
+        #endregion
+
+        public void OnModelCreating(ModelBuilder modelBuilder);
 
         Task<int> SaveChangesAsync(CancellationToken token = default);
 

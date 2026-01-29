@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
-using LMS.Common.DTOs;
 using LMS.Domain;
 
 namespace LMS.Common

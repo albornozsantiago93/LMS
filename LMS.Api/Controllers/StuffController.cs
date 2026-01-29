@@ -1,5 +1,4 @@
 using LMS.Common;
-using LMS.Common.DTOs;
 using LMS.Domain;
 using Microsoft.AspNetCore.Mvc;
 
