@@ -11,7 +11,7 @@ namespace LMS.Domain
     {
         [Column(TypeName = "Varchar(100)")]
         public string Description { get; set; }
-        public PlatformPermissionName Name { get; set; }
+        public PlatformPermissionName PermissionName { get; set; }
     }
 
     public enum PlatformPermissionName

@@ -20,7 +20,6 @@ namespace LMS.Common
         #endregion
 
         public void OnModelCreating(ModelBuilder modelBuilder);
-
         Task<int> SaveChangesAsync(CancellationToken token = default);
 
     }

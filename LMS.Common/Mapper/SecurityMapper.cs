@@ -36,7 +36,7 @@ namespace LMS.Common
         {
             UserModel model = MapTo<UserModel>(userView, lang);
 
-            model.Permissions = permissions.Select(x => x.Name.ToString()).ToList();
+            model.Permissions = permissions.Select(x => x.PermissionName.ToString()).ToList();
 
             foreach (string role in roles)
             {
