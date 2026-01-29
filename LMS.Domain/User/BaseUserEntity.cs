@@ -27,10 +27,8 @@ namespace LMS.Domain
 
         [Column(TypeName = "Varchar(20)")]
         public string ActivationCode { get; set; }
-
         public virtual Country Country { get; set; }
         public DateTime? BirthDate { get; set; }
-
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? LastLogin { get; set; }

@@ -21,9 +21,9 @@ namespace LMS.Api.Controllers
 
 
         [HttpGet("countries")]
-        public ActionResult<List<CountryModel>> GetCountries()
+        public async Task<ActionResult<List<CountryModel>>> GetCountriesAsync()
         {
-            List<Country> entity = Logic.StuffLogic.GetCountries();
+            List<Country> entity = await Logic.StuffLogic.GetCountries();
             var ret = _mapper.Mapper(CurrentLanguage).Map<List<CountryModel>>(entity);
 
             return Ok(ret);

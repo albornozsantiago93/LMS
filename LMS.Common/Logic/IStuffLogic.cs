@@ -4,7 +4,7 @@ namespace LMS.Common.Logic
 {
     public interface IStuffLogic
     {
-        List<Country> GetCountries();
+        Task<List<Country>> GetCountries();
 
     }
 }
