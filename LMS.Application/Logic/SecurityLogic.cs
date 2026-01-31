@@ -27,7 +27,9 @@ namespace LMS.Application.Logic
 
         public async Task<List<PlatformPermission>> GetPermissionsByUserId(Guid userId)
         {
-            return await _context.PlatformPermission.FromSqlRaw<PlatformPermission>("exec GetUserPermissions {0}", userId).ToListAsync();
+            //return await _context.PlatformPermission.FromSqlRaw<PlatformPermission>("exec GetUserPermissions {0}", userId).ToListAsync();
+
+            return await _context.PlatformPermission.ToListAsync();
         }
 
         /// <summary>
@@ -56,11 +58,12 @@ namespace LMS.Application.Logic
         {
             ttl = 60 * 5;
             var tokenHandler = new JwtSecurityTokenHandler();
+
             var key = Encoding.ASCII.GetBytes(ApiConfiguration.GetConfig("Tokens:Key"));
             List<Claim> claims = GetClaims(countryId, userEmail, userFullName, userIdentifier, sourceRef, role, moderatorPermission, permissions);
 
             var tokenDescriptor = new SecurityTokenDescriptor
-            {
+            { 
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(ttl),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -99,7 +102,6 @@ namespace LMS.Application.Logic
                 new Claim("useremail", userEmail),
                 new Claim("userfullname", userFullName),
                 new Claim("userguid", userIdentifier.ToString()),
-                new Claim("sourceref", sourceRef),
                 new Claim("lmsrole", role),
                 new Claim("moderatorpermission", moderatorPermission.ToString())
             };
@@ -126,7 +128,7 @@ namespace LMS.Application.Logic
         /// <returns>Token JWT generado como cadena.</returns>
         public string GetToken(UserView user, List<PlatformPermission> permissions, out int ttl)
         {
-            return GetToken(user.CountryId, user.Email, user.FullName, user.Id, user.SourceRef, user.Role, bool.Parse(user.IsModerator.ToString()), permissions, out ttl);
+            return GetToken(user.CountryId, user.Email, user.FullName, user.Id, user.SourceRef, user.Role, true, permissions, out ttl);
         }
 
     }

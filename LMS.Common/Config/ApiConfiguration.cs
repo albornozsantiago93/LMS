@@ -1,19 +1,15 @@
-﻿using AutoMapper.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace LMS.Common.Config
 {
     public static class ApiConfiguration
     {
-        private static Microsoft.Extensions.Configuration.IConfiguration currentConfig;
+        private static IConfiguration currentConfig;
 
-        public static void SetConfig(Microsoft.Extensions.Configuration.IConfiguration configuration)
+        public static void SetConfig(IConfiguration configuration)
         {
             currentConfig = configuration;
         }

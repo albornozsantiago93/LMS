@@ -2,9 +2,14 @@
 using LMS.Application;
 using LMS.Application.Logic;
 using LMS.Common;
+using LMS.Common.Config;
 using LMS.Common.Logic;
 using LMS.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
+using System.Text;
 
 
 namespace LMS.Api
@@ -15,11 +20,35 @@ namespace LMS.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            ApiConfiguration.SetConfig(builder.Configuration);
+            string connStr = ApiConfiguration.GetConnectionStringConfiguration("Conn");
+
+            builder.Services.AddDbContext<SqlContext>(options => options.EnableSensitiveDataLogging().UseSqlServer(connStr).UseLazyLoadingProxies());
+
             var redisConnection = builder.Configuration.GetConnectionString("RedisConnection");
             var multiplexer = ConnectionMultiplexer.Connect(redisConnection);
             CacheManager.Init(multiplexer);
 
-            builder.Services.AddDbContext<SqlContext>();
+            // Add Security
+            var key = Encoding.ASCII.GetBytes(ApiConfiguration.GetConfig("Tokens:Key"));
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             builder.Services.AddScoped<ISqlContext, SqlContext>();
             builder.Services.AddScoped<IStuffLogic, StuffLogic>();
             builder.Services.AddScoped<ILogicProxy, LogicProxy>();

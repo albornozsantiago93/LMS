@@ -19,7 +19,7 @@ namespace LMS.Common
             Logic = logic;
         }
 
-        protected MapperConfigurationExpression GetMapperConfigurationExpression(string language)
+        protected override MapperConfigurationExpression GetMapperConfigurationExpression(string language)
         {
             MapperConfigurationExpression config = new MapperConfigurationExpression();
 
@@ -30,7 +30,7 @@ namespace LMS.Common
                 .ForMember(x => x.Password, opt => opt.Ignore())
                 .ForMember(x => x.IsFirstLogin, opt => opt.MapFrom(x => x.LastLogin == null))
                 .ForMember(x => x.Profiles, opt => opt.Ignore())
-                .ForMember(x => x.Permissions, opt => opt.MapFrom(src => src.Permissions == null ? new List<string>() : src.Permissions.Select(p => p.PermissionName.ToString()).ToList()));
+                .ForMember(x => x.Permissions, opt => opt.Ignore());
 
             return config;
         }
